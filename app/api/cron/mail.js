@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const { email_service, user, pass } = process.env;
 
 const transporter = nodemailer.createTransport({
+  host: "test-cron-eta.vercel.app",
   port: 465,
   service: email_service,
   secure: true,
