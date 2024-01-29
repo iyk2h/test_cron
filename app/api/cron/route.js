@@ -10,6 +10,10 @@ export async function GET(request) {
     host: "smtp.gmail.com",
     port: 587,
     secure: false,
+    tls: {
+      ciphers: "SSLv3",
+      rejectUnauthorized: false,
+    },
     service: email_service,
     auth: {
       user: user,
