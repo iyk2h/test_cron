@@ -8,9 +8,13 @@ export async function GET(request) {
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    // port: 587,
+    port: 465,
     secure: true,
     service: email_service,
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
     auth: {
       user: user,
       pass: pass,
