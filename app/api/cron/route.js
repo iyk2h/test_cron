@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { sendMail } from "./mail";
 const nodemailer = require("nodemailer");
 
-export async function GET() {
+export async function GET(request) {
   const { email_service, user, pass } = process.env;
 
   const transporter = nodemailer.createTransport({
@@ -44,18 +44,28 @@ export async function GET() {
 
     console.log("Email Sent : ", info);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       ok: true,
-      success: Math.random(),
+      success: true,
       result: info,
     });
+
+    // Add cache-control headers to prevent caching
+    response.headers.set("Cache-Control", "no-store, must-revalidate");
+
+    return response;
   } catch (error) {
     console.error("Error occurred:", error);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       state: "NNNNOOOOOO",
       test: "test",
-      content: error.message, // Send the error message as part of the response
+      content: error.message,
     });
+
+    // Add cache-control headers to prevent caching
+    response.headers.set("Cache-Control", "no-store, must-revalidate");
+
+    return response;
   }
 }
