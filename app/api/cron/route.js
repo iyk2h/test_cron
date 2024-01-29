@@ -45,27 +45,34 @@ export async function GET(request) {
         if (err) {
           console.error(err);
           reject(err);
+          const response = NextResponse.json({
+            state: "NNNNOOOOOO",
+            test: "test",
+            content: error.message,
+          });
+
+          // Add cache-control headers to prevent caching
+          response.headers.set("Cache-Control", "no-store, must-revalidate");
+
+          return response;
         } else {
-          console.log(info);
+          console.log("Email Sent : ", info);
           resolve(info);
+          const response = NextResponse.json({
+            ok: true,
+            success: Math.random(),
+            result: info,
+          });
+
+          // Add cache-control headers to prevent caching
+          response.headers.set("Cache-Control", "no-store, must-revalidate");
+          response.headers.append("Pragma", "no-cache");
+          response.headers.append("Expires", "0");
+
+          return response;
         }
       });
     });
-
-    console.log("Email Sent : ", info);
-
-    const response = NextResponse.json({
-      ok: true,
-      success: Math.random(),
-      result: info,
-    });
-
-    // Add cache-control headers to prevent caching
-    response.headers.set("Cache-Control", "no-store, must-revalidate");
-    response.headers.append("Pragma", "no-cache");
-    response.headers.append("Expires", "0");
-
-    return response;
   } catch (error) {
     console.error("Error occurred:", error);
 
