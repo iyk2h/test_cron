@@ -87,4 +87,6 @@ export async function GET(request) {
 
     return response;
   }
+
+  return NextResponse.json({ ok: "ok" });
 }
