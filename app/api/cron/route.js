@@ -1,8 +1,7 @@
 "use server";
 
 import { NextResponse } from "next/server";
-import { sendMail } from "./mails";
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
 export async function GET(request) {
   // const { email_service, user, pass } = process.env;
@@ -80,6 +79,27 @@ export async function GET(request) {
 
   //   return response;
   // }
-  sendMail();
-  return NextResponse.json({ ok: true });
+  const sgMail = require("@sendgrid/mail");
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const { email_service, user, pass } = process.env;
+  const msg = {
+    from: user, // Change to your recipient
+    to: "yee0230@gmail.com", // Change to your verified sender
+    subject: "Sending with SendGrid is Fun",
+    text: "and easy to do anywhere, even with Node.js",
+    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+  };
+  let mmmm = "";
+  await sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+      mmmm = "sent";
+    })
+    .catch((error) => {
+      console.error(error);
+      mmmm = "errror ";
+      return NextResponse.json({ ok: "error" });
+    });
+  return NextResponse.json({ ok: mmmm });
 }
