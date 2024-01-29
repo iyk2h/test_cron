@@ -8,8 +8,8 @@ export async function GET(request) {
 
   const transporter = nodemailer.createTransport({
     host: "smtp.sendgrid.net",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
       user: "apikey",
       pass: pass,
