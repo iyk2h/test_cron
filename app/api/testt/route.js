@@ -11,6 +11,7 @@ export async function GET(request) {
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
+    service: email_service,
     auth: {
       user: user,
       pass: pass,
