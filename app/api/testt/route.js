@@ -7,14 +7,10 @@ export async function GET(request) {
   const { email_service, user, pass } = process.env;
 
   const transporter = nodemailer.createTransport({
+    pool: true,
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
-    service: email_service,
-    tls: {
-      // do not fail on invalid certs
-      rejectUnauthorized: false,
-    },
     auth: {
       user: user,
       pass: pass,
@@ -51,29 +47,20 @@ export async function GET(request) {
         if (err) {
           console.error(err);
           reject(err);
-          const response = NextResponse.json({
-            state: "NNNNOOOOOO",
-            test: "test",
-            content: err.message,
-          });
-
-          // Add cache-control headers to prevent caching
-          response.headers.set("Cache-Control", "no-store, must-revalidate");
-
-          return response;
         } else {
           console.log("Email Sent : ", info);
           resolve(info);
         }
       });
     });
+
     const response = NextResponse.json({
       ok: true,
       success: Math.random(),
       result: info,
     });
 
-    // Add cache-control headers to prevent caching
+    // Ensure response is not cached
     response.headers.set("Cache-Control", "no-store, must-revalidate");
     response.headers.append("Pragma", "no-cache");
     response.headers.append("Expires", "0");
@@ -88,7 +75,7 @@ export async function GET(request) {
       content: error.message,
     });
 
-    // Add cache-control headers to prevent caching
+    // Ensure response is not cached
     response.headers.set("Cache-Control", "no-store, must-revalidate");
 
     return response;
