@@ -39,8 +39,18 @@ export async function GET(request) {
       text: "test message",
     };
 
-    // send mail
-    const info = await transporter.sendMail(mailData);
+    const info = await new Promise((resolve, reject) => {
+      // send mail
+      transporter.sendMail(mailData, (err, info) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          console.log(info);
+          resolve(info);
+        }
+      });
+    });
 
     console.log("Email Sent : ", info);
 
