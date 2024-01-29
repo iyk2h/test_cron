@@ -3,63 +3,57 @@ import { sendMail } from "./mail";
 const nodemailer = require("nodemailer");
 
 export async function GET() {
-  // await sendMail();
-
   const { email_service, user, pass } = process.env;
 
   const transporter = nodemailer.createTransport({
-    // host: "test-cron-eta.vercel.app",
     host: "smtp.gmail.com",
-    port: 465,
+    port: 587,
+    secure: false,
     auth: {
       user: user,
       pass: pass,
     },
-    secure: true,
   });
 
-  await new Promise((resolve, reject) => {
+  try {
     // verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log(error);
-        reject(error);
-      } else {
-        console.log("Server is ready to take our messages");
-        resolve(success);
-      }
+    await new Promise((resolve, reject) => {
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
     });
-  });
 
-  const mailData = {
-    from: {
-      name: `LagLess`,
-      address: user,
-    },
-    to: "yee0230@gmail.com",
-    subject: `form message`,
-    text: "test message",
-  };
+    const mailData = {
+      from: {
+        name: `LagLess`,
+        address: user,
+      },
+      to: "yee0230@gmail.com",
+      subject: `form message`,
+      text: "test message",
+    };
 
-  const success = await new Promise((resolve, reject) => {
+    let inf = "";
+
     // send mail
-    transporter.sendMail(mailData).then((info, err) => {
-      if (info.response.includes("250")) {
-        resolve(true);
-      }
-      reject(err);
-    });
-  });
+    const info = await transporter.sendMail(mailData);
 
-  console.log("result : ", success);
+    console.log("Email Sent : ", info);
+    inf = info;
 
-  if (!success) {
+    return NextResponse.json({ ok: true, success: true, result: inf });
+  } catch (error) {
+    console.error("Error occurred:", error);
     return NextResponse.json({
       state: "NNNNOOOOOO",
       test: "test",
       content: "contnet",
     });
-  } else {
-    return NextResponse.json({ ok: true, test: "test", result: success });
   }
 }
