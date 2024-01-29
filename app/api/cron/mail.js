@@ -3,28 +3,49 @@ const nodemailer = require("nodemailer");
 const { email_service, user, pass } = process.env;
 
 const transporter = nodemailer.createTransport({
-  port: 587,
+  port: 465,
   service: email_service,
-  secure: false,
+  secure: true,
   auth: {
     user: user,
     pass: pass,
   },
 });
 
-const mailOptions = {
-  from: user,
+await new Promise((resolve, reject) => {
+  // verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+      reject(error);
+    } else {
+      console.log("Server is ready to take our messages");
+      resolve(success);
+    }
+  });
+});
+
+const mailData = {
+  from: {
+    name: `LagLess`,
+    address: user,
+  },
   to: "yee0230@gmail.com",
-  subject: "Nodemailer Test",
-  text: "노드 패키지 nodemailer를 이용해 보낸 이메일임",
+  subject: `form message`,
+  text: "test message",
 };
 
-export function sendMail() {
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log("Email Sent : ", info);
-    }
+export async function sendMail() {
+  await new Promise((resolve, reject) => {
+    // send mail
+    transporter.sendMail(mailData, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(info);
+        resolve(info);
+      }
+    });
   });
 }
