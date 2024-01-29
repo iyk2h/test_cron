@@ -50,7 +50,7 @@ export async function GET(request) {
           const response = NextResponse.json({
             state: "NNNNOOOOOO",
             test: "test",
-            content: error.message,
+            content: err.message,
           });
 
           // Add cache-control headers to prevent caching
