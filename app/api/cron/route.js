@@ -89,17 +89,15 @@ export async function GET(request) {
     text: "and easy to do anywhere, even with Node.js",
     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
   };
-  let mmmm = "";
-  await sgMail
-    .send(msg)
-    .then(() => {
-      console.log("Email sent");
-      mmmm = "sent";
-    })
-    .catch((error) => {
-      console.error(error);
-      mmmm = "errror ";
-      return NextResponse.json({ ok: "error" });
+
+  try {
+    const result = await sgMail.send(msg);
+    console.log("sent");
+    return NextResponse.json({ ok: result });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    return NextResponse.json({
+      ok: "error",
     });
-  return NextResponse.json({ ok: mmmm });
+  }
 }
