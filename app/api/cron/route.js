@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { sendMail } from "./mail";
 const nodemailer = require("nodemailer");
 
 export async function GET(request) {
