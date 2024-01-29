@@ -64,21 +64,21 @@ export async function GET(request) {
         } else {
           console.log("Email Sent : ", info);
           resolve(info);
-          const response = NextResponse.json({
-            ok: true,
-            success: Math.random(),
-            result: info,
-          });
-
-          // Add cache-control headers to prevent caching
-          response.headers.set("Cache-Control", "no-store, must-revalidate");
-          response.headers.append("Pragma", "no-cache");
-          response.headers.append("Expires", "0");
-
-          return response;
         }
       });
     });
+    const response = NextResponse.json({
+      ok: true,
+      success: Math.random(),
+      result: info,
+    });
+
+    // Add cache-control headers to prevent caching
+    response.headers.set("Cache-Control", "no-store, must-revalidate");
+    response.headers.append("Pragma", "no-cache");
+    response.headers.append("Expires", "0");
+
+    return response;
   } catch (error) {
     console.error("Error occurred:", error);
 
@@ -93,6 +93,4 @@ export async function GET(request) {
 
     return response;
   }
-
-  return NextResponse.json({ ok: "ok" });
 }
