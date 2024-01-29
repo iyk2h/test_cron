@@ -52,6 +52,8 @@ export async function GET(request) {
 
     // Add cache-control headers to prevent caching
     response.headers.set("Cache-Control", "no-store, must-revalidate");
+    response.headers.append("Pragma", "no-cache");
+    response.headers.append("Expires", "0");
 
     return response;
   } catch (error) {
