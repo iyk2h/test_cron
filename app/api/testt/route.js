@@ -39,7 +39,7 @@ export async function GET(request) {
       },
       to: "yee0230@gmail.com",
       subject: `form message`,
-      text: "test message",
+      text: `test message ${Math.random()}`,
     };
 
     const info = await new Promise((resolve, reject) => {
