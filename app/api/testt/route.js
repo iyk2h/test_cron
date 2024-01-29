@@ -7,13 +7,11 @@ export async function GET(request) {
   const { email_service, user, pass } = process.env;
 
   const transporter = nodemailer.createTransport({
-    pool: true,
-    host: "smtp.gmail.com",
+    host: "smtp.sendgrid.net",
     port: 465,
     secure: true,
-    service: email_service,
     auth: {
-      user: user,
+      user: "apikey",
       pass: pass,
     },
   });
