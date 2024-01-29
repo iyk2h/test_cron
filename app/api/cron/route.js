@@ -58,6 +58,9 @@ export async function GET() {
       content: "contnet",
     });
   } else {
-    return NextResponse.json({ ok: true, test: "test", content: "contnet" });
+    const response = new NextResponse();
+    response.setHeader("Cache-Control", "no-cache");
+    response.json({ ok: true, test: "test", content: "content" });
+    return response;
   }
 }
