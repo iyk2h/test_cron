@@ -51,6 +51,8 @@ export async function GET() {
     });
   });
 
+  console.log("result : ", success);
+
   if (!success) {
     return NextResponse.json({
       state: "NNNNOOOOOO",
@@ -58,9 +60,6 @@ export async function GET() {
       content: "contnet",
     });
   } else {
-    const response = new NextResponse();
-    response.setHeader("Cache-Control", "no-cache");
-    response.json({ ok: true, test: "test", content: "content" });
-    return response;
+    return NextResponse.json({ ok: true, test: "test", result: success });
   }
 }
