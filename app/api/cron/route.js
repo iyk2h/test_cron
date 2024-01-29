@@ -46,7 +46,7 @@ export async function GET(request) {
 
     const response = NextResponse.json({
       ok: true,
-      success: true,
+      success: Math.random(),
       result: info,
     });
 
