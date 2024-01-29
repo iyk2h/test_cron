@@ -9,8 +9,8 @@ export async function GET() {
 
   const transporter = nodemailer.createTransport({
     // host: "test-cron-eta.vercel.app",
+    host: "smtp.gmail.com",
     port: 465,
-    service: email_service,
     auth: {
       user: user,
       pass: pass,
