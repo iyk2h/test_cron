@@ -39,21 +39,23 @@ export async function GET() {
       text: "test message",
     };
 
-    let inf = "";
-
     // send mail
     const info = await transporter.sendMail(mailData);
 
     console.log("Email Sent : ", info);
-    inf = info;
 
-    return NextResponse.json({ ok: true, success: true, result: inf });
+    return NextResponse.json({
+      ok: true,
+      success: Math.random(),
+      result: info,
+    });
   } catch (error) {
     console.error("Error occurred:", error);
+
     return NextResponse.json({
       state: "NNNNOOOOOO",
       test: "test",
-      content: "contnet",
+      content: error.message, // Send the error message as part of the response
     });
   }
 }
