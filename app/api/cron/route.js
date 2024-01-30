@@ -5,7 +5,7 @@
 import { NextResponse } from "next/server";
 import { sendEmail } from "./mail";
 
-export async function GET() {
+export async function POST() {
   const v = new Date().toISOString();
 
   // Use Promise.then to handle the asynchronous operation
