@@ -7,7 +7,7 @@ function generateRandomSuccess() {
   return Math.random();
 }
 
-export async function getServerSideProps() {
+export async function GET() {
   try {
     // The email sending logic is now in the sendEmail function
     const info = await sendEmail();
@@ -24,11 +24,7 @@ export async function getServerSideProps() {
     response.headers.append("Pragma", "no-cache");
     response.headers.append("Expires", "0");
 
-    return {
-      props: {},
-      notFound: false,
-      redirect: null,
-    };
+    return response;
   } catch (error) {
     console.error("Error occurred:", error);
 
@@ -43,10 +39,6 @@ export async function getServerSideProps() {
     response.headers.append("Pragma", "no-cache");
     response.headers.append("Expires", "0");
 
-    return {
-      props: {},
-      notFound: false,
-      redirect: null,
-    };
+    return response;
   }
 }
