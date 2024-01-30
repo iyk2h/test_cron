@@ -3,22 +3,23 @@
 import { createTransport } from "nodemailer";
 
 export async function sendEmail() {
-  const { email_service, user, pass } = process.env;
+  const { NEXT_PUBLIC_EMAIL_SERVICE, NEXT_PUBLIC_USER, NEXT_PUBLIC_PASS } =
+    process.env;
 
   const transporter = createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-      user: user,
-      pass: pass,
+      user: NEXT_PUBLIC_USER,
+      pass: NEXT_PUBLIC_PASS,
     },
   });
 
   const mailData = {
     from: {
       name: `LagLess`,
-      address: user,
+      address: NEXT_PUBLIC_USER,
     },
     to: "yee0230@gmail.com",
     subject: `form message`,
@@ -38,9 +39,9 @@ export async function sendEmail() {
   });
 
   // const sgMail = require("@sendgrid/mail");
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  // sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
   // const msg = {
-  //   from: user, // Change to your recipient
+  //   from: NEXT_PUBLIC_USER, // Change to your recipient
   //   to: "yee0230@gmail.com", // Change to your verified sender
   //   subject: "Sending with SendGrid is Fun",
   //   text: "and easy to do anywhere, even with Node.js",
