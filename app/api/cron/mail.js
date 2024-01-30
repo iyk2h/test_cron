@@ -52,8 +52,8 @@ export async function sendEmail(v) {
   return new Promise((resolve, reject) => {
     sgMail
       .send(msg)
-      .then(() => {
-        console.log("sent");
+      .then((info) => {
+        console.log("sent : ", info);
         resolve({ ok: true });
       })
       .catch((error) => {
