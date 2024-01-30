@@ -54,11 +54,11 @@ export async function sendEmail(v) {
       .send(msg)
       .then((info) => {
         console.log("sent : ", info);
-        resolve({ ok: true });
+        resolve({ ok: info });
       })
       .catch((error) => {
         console.error("Error occurred:", error);
-        reject({ ok: "error" });
+        reject({ err: error });
       });
   });
 }
