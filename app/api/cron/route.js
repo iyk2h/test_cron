@@ -91,7 +91,9 @@ export async function GET(request) {
   };
 
   try {
-    const result = await sgMail.send(msg);
+    const result = await new Promise(async (resolve, reject) => {
+      await sgMail.send(msg);
+    });
     console.log("sent");
     return NextResponse.json({ ok: result });
   } catch (error) {
