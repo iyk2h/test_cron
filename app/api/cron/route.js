@@ -7,27 +7,29 @@ function generateRandomSuccess() {
   return Math.random();
 }
 
-export async function GET() {
-  try {
-    const v = generateRandomSuccess();
-    const info = await sendEmail(v);
+export function GET() {
+  const v = generateRandomSuccess();
 
-    return NextResponse.json(
-      {
-        ok: true,
-        success: v,
-        result: info,
-      },
-      { status: 202 }
-    );
-  } catch (error) {
-    console.error("Error occurred:", error);
+  // Use Promise.then to handle the asynchronous operation
+  return sendEmail(v)
+    .then((info) => {
+      return NextResponse.json(
+        {
+          ok: true,
+          success: v,
+          result: info,
+        },
+        { status: 202 }
+      );
+    })
+    .catch((error) => {
+      console.error("Error occurred:", error);
 
-    // Return an error response
-    return NextResponse.json({
-      state: "NNNNOOOOOO",
-      test: "test",
-      content: error.message,
+      // Return an error response
+      return NextResponse.json({
+        state: "NNNNOOOOOO",
+        test: "test",
+        content: error.message,
+      });
     });
-  }
 }
