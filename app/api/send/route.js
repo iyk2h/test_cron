@@ -11,7 +11,7 @@ export async function GET() {
   try {
     const v = generateRandomSuccess();
     // The email sending logic is now in the sendEmail function
-    const info = await sendEmail(v);
+    const info = "await sendEmail(v)";
 
     const response = NextResponse.json(
       {
@@ -22,7 +22,6 @@ export async function GET() {
       { status: 202 },
       { message: info }
     );
-    // Ensure response is not cached
 
     return response;
   } catch (error) {
@@ -34,7 +33,6 @@ export async function GET() {
       content: error.message,
     });
 
-    // Ensure response is not cached
     return response;
   }
 }
