@@ -19,9 +19,6 @@ export async function GET() {
       },
       { status: 202 }
     );
-    response.headers.set("Cache-Control", "no-store, must-revalidate");
-    response.headers.append("Pragma", "no-cache");
-    response.headers.append("Expires", "0");
     return response;
   } catch (error) {
     console.error("Error occurred:", error);
