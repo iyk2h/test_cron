@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div
       onClick={() => {
-        fetch("/api/testt");
+        fetch("/api/cron");
       }}
     >
       ㅙㅡ돼ㅡㄷ
