@@ -13,7 +13,7 @@ export function GET() {
   // Use Promise.then to handle the asynchronous operation
   return sendEmail(v)
     .then((info) => {
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           ok: true,
           success: v,
@@ -21,6 +21,10 @@ export function GET() {
         },
         { status: 202 }
       );
+      response.headers.set("Cache-Control", "no-store, must-revalidate");
+      response.headers.append("Pragma", "no-cache");
+      response.headers.append("Expires", "0");
+      return response;
     })
     .catch((error) => {
       console.error("Error occurred:", error);
