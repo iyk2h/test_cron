@@ -3,7 +3,7 @@
 
 import { createTransport } from "nodemailer";
 
-export async function sendEmail() {
+export async function sendEmail(v) {
   const { NEXT_PUBLIC_EMAIL_SERVICE, NEXT_PUBLIC_USER, NEXT_PUBLIC_PASS } =
     process.env;
 
@@ -23,7 +23,7 @@ export async function sendEmail() {
       address: NEXT_PUBLIC_USER,
     },
     to: "yee0230@gmail.com",
-    subject: `form message`,
+    subject: `${v} form message`,
     text: `test message ${Math.random()}`,
   };
 
