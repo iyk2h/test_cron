@@ -3,15 +3,18 @@
 import { NextResponse } from "next/server";
 import { sendEmail } from "./mail";
 
+function generateRandomSuccess() {
+  return Math.random();
+}
+
 export async function GET(request) {
   try {
     // The email sending logic is now in the sendEmail function
-    const info = await sendEmail();
 
     const response = NextResponse.json({
       ok: true,
-      success: Math.random(),
-      result: info,
+      success: generateRandomSuccess(),
+      result: await sendEmail(),
     });
 
     // Ensure response is not cached
