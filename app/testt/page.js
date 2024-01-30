@@ -1,6 +1,6 @@
 "use client";
 
-import { sendEmail } from "../api/cron/mail";
+import { sendEmail } from "../api/send/mail";
 
 export default function Home() {
   return (
