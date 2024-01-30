@@ -7,11 +7,19 @@ function generateRandomSuccess() {
   return Math.random();
 }
 
-export async function GET() {
+export function GET() {
   try {
     const v = generateRandomSuccess();
     // The email sending logic is now in the sendEmail function
-    const info = await sendEmail(v);
+    const info = sendEmail(v)
+      .then((info) => {
+        // Do something with the result
+        console.log(info);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error(error);
+      });
 
     const response = NextResponse.json(
       {
