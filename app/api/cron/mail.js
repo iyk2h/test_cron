@@ -2,7 +2,7 @@
 
 import { createTransport } from "nodemailer";
 
-async function sendEmail() {
+export async function sendEmail() {
   const { email_service, user, pass } = process.env;
 
   const transporter = createTransport({
@@ -60,7 +60,3 @@ async function sendEmail() {
   //   });
   // }
 }
-
-export default {
-  sendEmail,
-};
