@@ -1,5 +1,4 @@
 // route.js
-"use server";
 
 import { NextResponse } from "next/server";
 import { sendEmail } from "./mail";
@@ -8,7 +7,7 @@ function generateRandomSuccess() {
   return Math.random();
 }
 
-export async function GET(request) {
+export async function GET() {
   try {
     // The email sending logic is now in the sendEmail function
     const info = await sendEmail();
