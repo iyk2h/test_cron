@@ -1,13 +1,11 @@
 // mail.js
 
-"use s";
-
-const nodemailer = require("nodemailer");
+import { createTransport } from "nodemailer";
 
 async function sendEmail() {
   const { email_service, user, pass } = process.env;
 
-  const transporter = nodemailer.createTransport({
+  const transporter = createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -63,6 +61,6 @@ async function sendEmail() {
   // }
 }
 
-module.exports = {
+export default {
   sendEmail,
 };
