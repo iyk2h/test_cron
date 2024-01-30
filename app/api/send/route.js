@@ -13,13 +13,15 @@ export async function GET() {
     // The email sending logic is now in the sendEmail function
     const info = await sendEmail(v);
 
-    const response = NextResponse.json({
-      ok: true,
-      success: v,
-      result: info,
-      message: info,
-    });
-
+    const response = NextResponse.json(
+      {
+        ok: true,
+        success: v,
+        result: info,
+      },
+      { status: 200 },
+      { message: info }
+    );
     // Ensure response is not cached
     response.headers.set("Cache-Control", "no-store, must-revalidate");
     response.headers.append("Pragma", "no-cache");
