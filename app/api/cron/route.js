@@ -10,10 +10,7 @@ function generateRandomSuccess() {
 export async function GET() {
   try {
     // The email sending logic is now in the sendEmail function
-
-    const info = new Promise(async (resolve, reject) => {
-      await sendEmail();
-    });
+    const info = "await sendEmail()";
 
     const response = NextResponse.json({
       ok: true,
