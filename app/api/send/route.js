@@ -5,10 +5,16 @@ export async function GET() {
 
   const response = NextResponse.json({ random: randomValue });
 
-  // Ensure response is not cached
+  // Append a unique query parameter to the URL to force cache miss
+  const currentDate = new Date();
+  const cacheBuster = currentDate.getTime();
+  const updatedUrl = `${response.url}?cache=${cacheBuster}`;
+
+  // Set the updated URL
   response.headers.set("Cache-Control", "no-store, must-revalidate");
   response.headers.append("Pragma", "no-cache");
   response.headers.append("Expires", "0");
+  response.headers.set("Location", updatedUrl);
 
   return response;
 }
