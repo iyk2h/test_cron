@@ -7,19 +7,18 @@ function generateRandomSuccess() {
   return Math.random();
 }
 
-async function sendEmailAndReturnResponse() {
+export async function GET() {
   try {
     const v = generateRandomSuccess();
-    const info = await sendEmail(v);
+    const infoPromise = await sendEmail(v);
 
     const response = NextResponse.json(
       {
         ok: true,
         success: v,
-        result: info,
+        result: infoPromise,
       },
-      { status: 202 },
-      { message: info }
+      { status: 202 }
     );
 
     return response;
@@ -34,8 +33,4 @@ async function sendEmailAndReturnResponse() {
 
     return response;
   }
-}
-
-export function GET() {
-  return sendEmailAndReturnResponse();
 }
