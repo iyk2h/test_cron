@@ -1,4 +1,5 @@
 // mail.js
+"use server";
 
 import { createTransport } from "nodemailer";
 
@@ -10,7 +11,6 @@ export async function sendEmail() {
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
-    service: NEXT_PUBLIC_EMAIL_SERVICE,
     auth: {
       user: NEXT_PUBLIC_USER,
       pass: NEXT_PUBLIC_PASS,

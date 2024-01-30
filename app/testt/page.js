@@ -1,10 +1,13 @@
 "use client";
 
+import { sendEmail } from "../api/cron/mail";
+
 export default function Home() {
   return (
     <div
       onClick={() => {
-        fetch("/api/cron");
+        sendEmail();
+        console.log("click");
       }}
     >
       메일 전송 테스트
