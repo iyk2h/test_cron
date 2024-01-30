@@ -39,13 +39,12 @@ export async function sendEmail(v) {
   //   });
   // });
 
-  const date = new Date().toISOString();
   const sgMail = require("@sendgrid/mail");
   sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
   const msg = {
     from: NEXT_PUBLIC_USER, // Change to your recipient
     to: "yee0230@gmail.com", // Change to your verified sender
-    subject: `${date} Sending with SendGrid is Fun`,
+    subject: `${v} Sending with SendGrid is Fun`,
     text: "and easy to do anywhere, even with Node.js",
     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
   };
@@ -55,7 +54,7 @@ export async function sendEmail(v) {
       .send(msg)
       .then((info) => {
         console.log("sent : ", info);
-        resolve({ ok: info, date: date });
+        resolve({ ok: info });
       })
       .catch((error) => {
         console.error("Error occurred:", error);

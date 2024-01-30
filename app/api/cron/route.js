@@ -1,21 +1,16 @@
 // route.js
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextApiResponse } from "next";
 import { sendEmail } from "./mail";
 
-function generateRandomSuccess() {
-  return Math.random();
-}
-
 export async function GET() {
-  const v = generateRandomSuccess();
+  const v = new Date().toISOString();
 
   // Use Promise.then to handle the asynchronous operation
   try {
     const info = await sendEmail(v);
-    const response = NextResponse.json(
+    const response = NextApiResponse.json(
       {
-        ok: true,
         success: v,
         result: info,
       },
@@ -27,7 +22,7 @@ export async function GET() {
     return response;
   } catch (error) {
     console.error("Error occurred:", error);
-    return NextResponse.json({
+    return NextApiResponse.json({
       state: "NNNNOOOOOO",
       test: "test",
       content: error.message,
