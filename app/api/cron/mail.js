@@ -49,16 +49,16 @@ export async function sendEmail(v) {
     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
   };
 
-  try {
-    const result = await new Promise(async (resolve, reject) => {
-      await sgMail.send(msg);
-    });
-    console.log("sent");
-    return NextResponse.json({ ok: result });
-  } catch (error) {
-    console.error("Error occurred:", error);
-    return NextResponse.json({
-      ok: "error",
-    });
-  }
+  return new Promise((resolve, reject) => {
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("sent");
+        resolve({ ok: true });
+      })
+      .catch((error) => {
+        console.error("Error occurred:", error);
+        reject({ ok: "error" });
+      });
+  });
 }
