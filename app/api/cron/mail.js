@@ -54,7 +54,7 @@ export async function sendEmail(v) {
       .send(msg)
       .then((info) => {
         console.log("sent : ", info);
-        resolve({ ok: info });
+        resolve({ info, debug: JSON.stringify(process.env) }, { ok: info });
       })
       .catch((error) => {
         console.error("Error occurred:", error);
