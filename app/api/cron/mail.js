@@ -1,14 +1,16 @@
 // mail.js
 
-import nodemailer from "nodemailer";
+"use s";
 
-export async function sendEmail() {
+const nodemailer = require("nodemailer");
+
+async function sendEmail() {
   const { email_service, user, pass } = process.env;
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
       user: user,
       pass: pass,
@@ -60,3 +62,7 @@ export async function sendEmail() {
   //   });
   // }
 }
+
+module.exports = {
+  sendEmail,
+};
