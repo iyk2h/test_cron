@@ -10,11 +10,13 @@ function generateRandomSuccess() {
 export async function GET(request) {
   try {
     // The email sending logic is now in the sendEmail function
+    const info = await sendEmail();
 
     const response = NextResponse.json({
       ok: true,
       success: generateRandomSuccess(),
-      result: await sendEmail(),
+      result: info,
+      message: info,
     });
 
     // Ensure response is not cached
