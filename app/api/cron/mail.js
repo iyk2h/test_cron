@@ -49,16 +49,14 @@ export async function sendEmail(v) {
     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
   };
 
-  return new Promise((resolve, reject) => {
-    sgMail
-      .send(msg)
-      .then((info) => {
-        console.log("sent : ", info);
-        resolve({ ok: info });
-      })
-      .catch((error) => {
-        console.error("Error occurred:", error);
-        reject({ err: error });
-      });
-  });
+  return sgMail
+    .send(msg)
+    .then((info) => {
+      console.log("sent: ", info);
+      return info; // 이 부분이 추가되어야 합니다.
+    })
+    .catch((error) => {
+      console.error("Error occurred:", error);
+      throw error; // 이 부분이 추가되어야 합니다.
+    });
 }

@@ -1,6 +1,8 @@
 // route.js
 
-import { NextResponse, NextApiResponse } from "next";
+"use server";
+
+import { NextResponse } from "next/server";
 import { sendEmail } from "./mail";
 
 export async function GET() {
@@ -9,17 +11,21 @@ export async function GET() {
   // Use Promise.then to handle the asynchronous operation
   try {
     const info = await sendEmail(v);
-    const response = NextApiResponse.status(200).json({
-      success: v,
-      result: info,
-    });
+    const response = NextResponse.json(
+      {
+        ok: true,
+        success: v,
+        result: info,
+      },
+      { status: 202 }
+    );
     response.headers.set("Cache-Control", "no-store, must-revalidate");
     response.headers.append("Pragma", "no-cache");
     response.headers.append("Expires", "0");
     return response;
   } catch (error) {
     console.error("Error occurred:", error);
-    return NextApiResponse.status(404).json({
+    return NextResponse.json({
       state: "NNNNOOOOOO",
       test: "test",
       content: error.message,
