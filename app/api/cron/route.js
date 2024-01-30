@@ -1,57 +1,12 @@
-"use server";
+// route.js
 
 import { NextResponse } from "next/server";
-// const nodemailer = require("nodemailer");
+import { sendEmail } from "./mail";
 
 export async function GET(request) {
-  const { email_service, user, pass } = process.env;
-
-  const transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
-    port: 587,
-    secure: false,
-    auth: {
-      user: "apikey",
-      pass: pass,
-    },
-  });
-
   try {
-    // verify connection configuration
-    await new Promise((resolve, reject) => {
-      transporter.verify(function (error, success) {
-        if (error) {
-          console.log(error);
-          reject(error);
-        } else {
-          console.log("Server is ready to take our messages");
-          resolve(success);
-        }
-      });
-    });
-
-    const mailData = {
-      from: {
-        name: `LagLess`,
-        address: user,
-      },
-      to: "yee0230@gmail.com",
-      subject: `form message`,
-      text: `test message ${Math.random()}`,
-    };
-
-    const info = await new Promise((resolve, reject) => {
-      // send mail
-      transporter.sendMail(mailData, (err, info) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-        } else {
-          console.log("Email Sent : ", info);
-          resolve(info);
-        }
-      });
-    });
+    // The email sending logic is now in the sendEmail function
+    const info = await sendEmail();
 
     const response = NextResponse.json({
       ok: true,
@@ -81,26 +36,4 @@ export async function GET(request) {
 
     return response;
   }
-  // const sgMail = require("@sendgrid/mail");
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  // const msg = {
-  //   from: user, // Change to your recipient
-  //   to: "yee0230@gmail.com", // Change to your verified sender
-  //   subject: "Sending with SendGrid is Fun",
-  //   text: "and easy to do anywhere, even with Node.js",
-  //   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-  // };
-
-  // try {
-  //   const result = await new Promise(async (resolve, reject) => {
-  //     await sgMail.send(msg);
-  //   });
-  //   console.log("sent");
-  //   return NextResponse.json({ ok: result });
-  // } catch (error) {
-  //   console.error("Error occurred:", error);
-  //   return NextResponse.json({
-  //     ok: "error",
-  //   });
-  // }
 }

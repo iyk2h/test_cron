@@ -7,7 +7,7 @@ export default function Home() {
         fetch("/api/cron");
       }}
     >
-      ㅙㅡ돼ㅡㄷ
+      메일 전송 테스트
     </div>
   );
 }
