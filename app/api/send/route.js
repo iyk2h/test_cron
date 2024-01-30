@@ -19,13 +19,10 @@ export async function GET() {
         success: v,
         result: info,
       },
-      { status: 200 },
+      { status: 202 },
       { message: info }
     );
     // Ensure response is not cached
-    response.headers.set("Cache-Control", "no-store, must-revalidate");
-    response.headers.append("Pragma", "no-cache");
-    response.headers.append("Expires", "0");
 
     return response;
   } catch (error) {
@@ -38,10 +35,6 @@ export async function GET() {
     });
 
     // Ensure response is not cached
-    response.headers.set("Cache-Control", "no-store, must-revalidate");
-    response.headers.append("Pragma", "no-cache");
-    response.headers.append("Expires", "0");
-
     return response;
   }
 }
