@@ -1,5 +1,6 @@
 // mail.js
 "use server";
+const { DateTime } = require("luxon");
 
 import { createTransport } from "nodemailer";
 
@@ -17,6 +18,8 @@ export async function sendEmail(v) {
     },
   });
 
+  const curDate = DateTime.local();
+
   const mailData = {
     from: {
       name: `LagLess`,
@@ -24,7 +27,23 @@ export async function sendEmail(v) {
     },
     to: "yee0230@gmail.com",
     subject: `${v} form message`,
-    text: `test message ${Math.random()}`,
+    text: `test message ${Math.random()} 
+    ....
+    cur date : ${curDate.toISO()}
+    ...
+    search start date : ${curDate
+      .plus({ days: 1 })
+      .toUTC(0)
+      .startOf("day")
+      .toISO()}
+    ...
+    search end date : ${curDate
+      .plus({ days: 1 })
+      .toUTC(0)
+      .startOf("day")
+      .endOf("day")
+      .toISO()}
+    `,
   };
 
   return await transporter
